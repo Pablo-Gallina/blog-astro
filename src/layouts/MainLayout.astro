@@ -6,8 +6,15 @@ interface Props {
   title: string;
   image?: string;
   description?: string;
+  frontmatter?: Record<string, any>;
 }
-const { title, description, image } = Astro.props;
+const { title, description, image, frontmatter } = Astro.props;
+
+const {
+  title: frontmatterTitle = title,
+  description: frontmatterDescription = description,
+  image: frontmatterImage = image,
+} = frontmatter || {};
 ---
 
 <html lang="en">
@@ -29,7 +36,7 @@ const { title, description, image } = Astro.props;
     />
 
     <!-- OG Metatags -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={frontmatterTitle || title} />
     <meta
       property="og:description"
       content={description ||
@@ -37,11 +44,11 @@ const { title, description, image } = Astro.props;
     />
     <meta property="og:image" content={image || "/default-image.jpg"} />
 
-    <title>{title}</title>
+    <title>{frontmatterTitle || title}</title>
     <ClientRouter />
   </head>
   <body class="relative">
-    <main class="m-auto max-w-3xl pt-6 relative z-10">
+    <main class="m-auto max-w-3xl py-6 px-4 relative z-10">
       <slot />
     </main>
   </body>
