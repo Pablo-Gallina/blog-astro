@@ -1,0 +1,48 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  image?: string;
+  description?: string;
+}
+const { title, description, image } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content={description ||
+        "Explore the Marvel Universe with our comprehensive character database."}
+    />
+    <meta
+      name="keywords"
+      content="Marvel, Characters, Database, Comics, Superheroes"
+    />
+
+    <!-- OG Metatags -->
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:description"
+      content={description ||
+        "Explore the Marvel Universe with our comprehensive character database."}
+    />
+    <meta property="og:image" content={image || "/default-image.jpg"} />
+
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body class="relative">
+    <main class="m-auto max-w-3xl pt-6 relative z-10">
+      <slot />
+    </main>
+  </body>
+</html>
