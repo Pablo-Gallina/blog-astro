@@ -1,15 +1,15 @@
 ---
 import BlogPost from "@/components/BlogPost/BlogPost.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+
+const posts = await Astro.glob("./posts/*.{md,mdx}");
+console.log(posts);
 ---
 
 <MainLayout title="Hello World!">
   <h1 class="text-3xl font-bold underline">Hello world! This is Astro.</h1>
 
   <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
-    <BlogPost />
-    <BlogPost />
-    <BlogPost />
-    <BlogPost />
+    {posts.map((post) => <BlogPost {...post} />)}
   </div>
 </MainLayout>
