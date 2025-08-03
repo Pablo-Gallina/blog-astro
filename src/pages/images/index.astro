@@ -1,0 +1,113 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+
+import post05img from "@images/post-05.png";
+import { Picture } from "astro:assets";
+---
+
+<MainLayout title="Images">
+  <h1 class="text-3xl font-bold underline">Images</h1>
+
+  <p class="mt-4">
+    This page is a placeholder for images. You can add your images here.
+  </p>
+
+  <div class="">
+    <!-- Add your images here -->
+    <img
+      src="/assets/images/post-05.png"
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+    />
+
+    <Image
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+    />
+
+    <h1>QUality low</h1>
+    <Image
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+      quality="low"
+    />
+
+    <h1>image jpg</h1>
+    <Image
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+      format="jpg"
+    />
+
+    <h1>image avif</h1>
+    <Image
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+      format="avif"
+    />
+
+    <h1>Picture</h1>
+    <Picture
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+      formats={["avif", "webp", "jpg"]}
+    />
+
+    <h1>Sizes</h1>
+    <Picture
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+      widths={[240, 540, 720, post05img.width]}
+      sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${post05img.width}px`}
+    />
+
+    <h1>Densities</h1>
+    <Picture
+      src={post05img}
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      height="250"
+      loading="lazy"
+      width={post05img.width / 2}
+      densities={[1.5, 2]}
+    />
+
+    <div style={{ height: "1850px" }}></div>
+
+    <img
+      src="/assets/images/post-01.png"
+      alt="Sample Image"
+      class="rounded-lg shadow-lg"
+      width="250"
+      height="250"
+      loading="lazy"
+    />
+  </div>
+</MainLayout>
