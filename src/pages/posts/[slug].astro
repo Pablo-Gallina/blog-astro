@@ -1,0 +1,54 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog");
+
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+    props: {
+      title: post.data.title,
+      author: post.data.author,
+      post,
+      //   frontmatter: {
+      //     title: post.data.title,
+      //     description: post.data.description,
+      //     image: post.data.image,
+      //   },
+    },
+  }));
+
+  console.log("Generated paths:", paths);
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { title, author, post } = Astro.props;
+
+const { Content, headings } = await post.render();
+---
+
+<MainLayout title="Blog Post">
+  <h1 class="text-xs font-bold">
+    {title || "Blog Post"}
+  </h1>
+  <p class="text-xs">
+    {author || "Unknown Author"}
+  </p>
+
+  <ol class="my-4">
+    {
+      headings.map((heading, index) => (
+        <li>
+          <a href={`#${heading.slug}`} class="text-blue-500 hover:underline">
+            {`${index + 1}. ${heading.text}`}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <!-- Contenido proveniente de Content -->
+  <Content />
+</MainLayout>

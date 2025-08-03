@@ -1,0 +1,29 @@
+---
+import { formatDate } from "@/utils/Formater";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">; // obtener el tipado de dato CollectionEntry para la colección "blog" (configurado en src/content/config.ts)
+}
+
+const { post } = Astro.props;
+const frontmatter = post.data;
+
+// const { frontmatter, url, ...props } = Astro.props;
+---
+
+<div class="lg:flex flex-col">
+  <img
+    class="object-cover w-full h-56 rounded-lg"
+    src={frontmatter.image}
+    alt=""
+  />
+
+  <div class="flex flex-col justify-between">
+    <a href={`/posts/${post.slug}`}> {frontmatter.title} </a>
+
+    <span class="text-sm text-gray-500">
+      {formatDate(frontmatter.date)}
+    </span>
+  </div>
+</div>
