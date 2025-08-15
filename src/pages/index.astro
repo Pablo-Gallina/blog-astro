@@ -3,11 +3,16 @@ import TypedBlogPost from "@/components/BlogPost/TypedBlogPost.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog"); // nombre de la colección definido en src/content/config.ts
+const posts = await getCollection(
+  "blog",
+  (post) => post.data.isDraft === false
+); // nombre de la colección definido en src/content/config.ts
 ---
 
 <MainLayout title="Hello World!">
   <h1 class="text-3xl font-bold underline">Hello world! This is Astro.</h1>
+
+  <a href="/blog/1">Ir al blog Pagina 1</a>
 
   <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
     {posts.map((post) => <TypedBlogPost post={post} />)}

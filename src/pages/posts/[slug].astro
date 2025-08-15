@@ -1,10 +1,12 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("blog", (post) => post.data.isDraft === false);
 
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
@@ -25,9 +27,12 @@ export const getStaticPaths = (async () => {
   return paths;
 }) satisfies GetStaticPaths;
 
-const { title, author, post } = Astro.props;
+const { title, post } = Astro.props;
 
 const { Content, headings } = await post.render();
+const frontmatter = post.data;
+
+const author = (await getEntry("author", post.data.author.id))?.data;
 ---
 
 <MainLayout title="Blog Post">
@@ -35,8 +40,28 @@ const { Content, headings } = await post.render();
     {title || "Blog Post"}
   </h1>
   <p class="text-xs">
-    {author || "Unknown Author"}
+    {author?.name || "Unknown Author"}
   </p>
+
+  <div>
+    <Image
+      src={author?.avatar!}
+      alt={author?.name || "Author Avatar"}
+      class="rounded-full"
+      loading="lazy"
+      width={50}
+      height={50}
+    />
+
+    <a
+      href={`/posts/${frontmatter.author.id}`}
+      class="text-blue-500 hover:underline"
+    >
+      <span class="text-sm text-gray-500">
+        {author?.name || "Unknown Author"}
+      </span>
+    </a>
+  </div>
 
   <ol class="my-4">
     {
