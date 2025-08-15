@@ -11,5 +11,6 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx()]
+  integrations: [mdx()],
+  site: 'https://blog-astro.vercel.app',
 });

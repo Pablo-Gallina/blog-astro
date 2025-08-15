@@ -44,6 +44,9 @@ const {
     />
     <meta property="og:image" content={image || "/default-image.jpg"} />
 
+    <!-- RSS FEED -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href={`${Astro.site}/rss.xml`} />
+
     <title>{frontmatterTitle || title}</title>
     <ClientRouter />
   </head>
